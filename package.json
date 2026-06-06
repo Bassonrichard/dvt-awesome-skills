@@ -1,0 +1,36 @@
+{
+  "name": "dvt-awesome-skills",
+  "version": "1.0.0",
+  "description": "DVT's tool-agnostic collection of AI skills and instructions. Author once, generate for GitHub Copilot, Cursor, Windsurf, Claude Code, and Kiro.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "skill:create": "node ./eng/create-skill.mjs",
+    "instruction:create": "node ./eng/create-instruction.mjs",
+    "validate": "node ./eng/validate.mjs",
+    "build": "node ./eng/build.mjs",
+    "install:tool": "node ./eng/install.mjs",
+    "website:data": "node ./eng/generate-website-data.mjs",
+    "website:dev": "npm run website:data && npm --prefix website run dev",
+    "website:build": "npm run website:data && npm --prefix website run build",
+    "website:preview": "npm --prefix website run preview"
+  },
+  "keywords": [
+    "dvt",
+    "ai",
+    "skills",
+    "instructions",
+    "copilot",
+    "cursor",
+    "windsurf",
+    "claude-code",
+    "kiro"
+  ],
+  "author": "DVT",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "js-yaml": "^4.1.1",
+    "vfile": "^6.0.3",
+    "vfile-matter": "^5.0.1"
+  }
+}

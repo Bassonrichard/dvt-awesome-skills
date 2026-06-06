@@ -1,0 +1,107 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import Modal from "../components/Modal.astro";
+import Icon from "../components/Icon.astro";
+import BackToTop from "../components/BackToTop.astro";
+
+const base = import.meta.env.BASE_URL;
+---
+
+<StarlightPage
+  frontmatter={{
+    title: "DVT Awesome Skills",
+    description:
+      "DVT's internal collection of AI skills and coding instructions — author once, generate for Copilot, Cursor, Windsurf, Claude Code, and Kiro",
+    template: "splash",
+    pagefind: false,
+    prev: false,
+    next: false,
+    editUrl: false,
+    head: [
+      {
+        tag: "meta",
+        attrs: {
+          property: "og:type",
+          content: "website",
+        },
+      },
+    ],
+  }}
+  hasSidebar={false}
+>
+  <div id="main-content">
+    <!-- Hero Section -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="container">
+        <h1 id="hero-heading">
+          <span class="gradient-text">DVT Awesome Skills</span>
+        </h1>
+        <p class="hero-subtitle">
+          DVT's internal, tool-agnostic collection of AI skills and coding
+          instructions. Author once — generate for GitHub Copilot, Cursor,
+          Windsurf, Claude Code, and Kiro.
+        </p>
+      </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="quick-links" aria-labelledby="quick-links-heading">
+      <h2 id="quick-links-heading" class="sr-only">Browse Resources</h2>
+      <div class="container">
+        <div class="cards-grid">
+          <a
+            href={`${base}skills/`}
+            class="card card-with-count card-category-power"
+            id="card-skills"
+            style="--animation-delay: 0ms;"
+          >
+            <div class="card-icon" aria-hidden="true">
+              <Icon name="lightning" size={40} />
+            </div>
+            <div class="card-content">
+              <h3>Skills</h3>
+              <p>Self-contained capabilities with instructions and resources</p>
+            </div>
+            <div
+              class="card-count"
+              data-count="skills"
+              aria-label="Skill count"
+            >
+              -
+            </div>
+          </a>
+          <a
+            href={`${base}instructions/`}
+            class="card card-with-count card-category-docs"
+            id="card-instructions"
+            style="--animation-delay: 50ms;"
+          >
+            <div class="card-icon" aria-hidden="true">
+              <Icon name="document" size={40} />
+            </div>
+            <div class="card-content">
+              <h3>Instructions</h3>
+              <p>DVT coding standards applied by activation mode</p>
+            </div>
+            <div
+              class="card-count"
+              data-count="instructions"
+              aria-label="Instruction count"
+            >
+              -
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <Modal />
+
+  <!-- Back to Top Button -->
+  <BackToTop />
+
+  <script>
+    import "../scripts/pages/index";
+  </script>
+</StarlightPage>

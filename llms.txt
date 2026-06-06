@@ -1,0 +1,13 @@
+# DVT Awesome Skills
+
+> Tool-agnostic DVT AI skills and instructions, generated for Copilot, Cursor, Windsurf, Claude Code, and Kiro.
+
+## Skills
+- [dvt-adr-author](skills/dvt-adr-author/SKILL.md): Use when capturing an architecture decision at DVT. Produces a consistent Architecture Decision Record (ADR) with context, options, decision, and consequences.
+- [dvt-new-service-scaffold](skills/dvt-new-service-scaffold/SKILL.md): Use when creating a new backend service at DVT. Scaffolds the standard service layout, health checks, structured logging, and CI wiring so every service starts from the same baseline.
+- [dvt-secure-api-review](skills/dvt-secure-api-review/SKILL.md): Use when reviewing a DVT REST or GraphQL API against the company security baseline before release. Walks authn/authz, input validation, rate limiting, secrets, and logging.
+
+## Instructions
+- [git-pr-conventions](instructions/git-pr-conventions.instructions.md): DVT git and pull request conventions that always apply across repositories
+- [security-baseline](instructions/security-baseline.instructions.md): DVT security baseline — load when handling auth, secrets, user input, or data access
+- [typescript-standards](instructions/typescript-standards.instructions.md): DVT TypeScript coding standards for application and service code

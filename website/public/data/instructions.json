@@ -1,0 +1,57 @@
+{
+  "items": [
+    {
+      "id": "git-pr-conventions",
+      "title": "Git Pr Conventions",
+      "description": "DVT git and pull request conventions that always apply across repositories",
+      "activation": "always",
+      "applyTo": "(always)",
+      "applyToPatterns": [],
+      "extensions": [],
+      "path": "instructions/git-pr-conventions.instructions.md",
+      "filename": "git-pr-conventions.instructions.md",
+      "lastUpdated": null
+    },
+    {
+      "id": "security-baseline",
+      "title": "Security Baseline",
+      "description": "DVT security baseline — load when handling auth, secrets, user input, or data access",
+      "activation": "model",
+      "applyTo": "(model)",
+      "applyToPatterns": [],
+      "extensions": [],
+      "path": "instructions/security-baseline.instructions.md",
+      "filename": "security-baseline.instructions.md",
+      "lastUpdated": null
+    },
+    {
+      "id": "typescript-standards",
+      "title": "Typescript Standards",
+      "description": "DVT TypeScript coding standards for application and service code",
+      "activation": "glob",
+      "applyTo": "**/*.ts, **/*.tsx",
+      "applyToPatterns": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "extensions": [
+        "ts",
+        "tsx"
+      ],
+      "path": "instructions/typescript-standards.instructions.md",
+      "filename": "typescript-standards.instructions.md",
+      "lastUpdated": null
+    }
+  ],
+  "filters": {
+    "patterns": [
+      "**/*.ts",
+      "**/*.tsx"
+    ],
+    "extensions": [
+      "(none)",
+      "ts",
+      "tsx"
+    ]
+  }
+}

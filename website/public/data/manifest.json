@@ -1,0 +1,16 @@
+{
+  "generated": null,
+  "counts": {
+    "agents": 0,
+    "instructions": 3,
+    "skills": 3,
+    "hooks": 0,
+    "workflows": 0,
+    "plugins": 0,
+    "extensions": 0,
+    "tools": 0,
+    "contributors": 0,
+    "samples": 0,
+    "total": 6
+  }
+}

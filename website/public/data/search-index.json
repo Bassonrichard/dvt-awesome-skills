@@ -1,0 +1,56 @@
+[
+  {
+    "type": "skill",
+    "id": "dvt-adr-author",
+    "title": "Dvt Adr Author",
+    "description": "Use when capturing an architecture decision at DVT. Produces a consistent Architecture Decision Record (ADR) with context, options, decision, and consequences.",
+    "path": "skills/dvt-adr-author",
+    "lastUpdated": null,
+    "searchText": "dvt adr author use when capturing an architecture decision at dvt. produces a consistent architecture decision record (adr) with context, options, decision, and consequences. dvt-adr-author"
+  },
+  {
+    "type": "skill",
+    "id": "dvt-new-service-scaffold",
+    "title": "Dvt New Service Scaffold",
+    "description": "Use when creating a new backend service at DVT. Scaffolds the standard service layout, health checks, structured logging, and CI wiring so every service starts from the same baseline.",
+    "path": "skills/dvt-new-service-scaffold",
+    "lastUpdated": null,
+    "searchText": "dvt new service scaffold use when creating a new backend service at dvt. scaffolds the standard service layout, health checks, structured logging, and ci wiring so every service starts from the same baseline. dvt-new-service-scaffold"
+  },
+  {
+    "type": "skill",
+    "id": "dvt-secure-api-review",
+    "title": "Dvt Secure Api Review",
+    "description": "Use when reviewing a DVT REST or GraphQL API against the company security baseline before release. Walks authn/authz, input validation, rate limiting, secrets, and logging.",
+    "path": "skills/dvt-secure-api-review",
+    "lastUpdated": null,
+    "searchText": "dvt secure api review use when reviewing a dvt rest or graphql api against the company security baseline before release. walks authn/authz, input validation, rate limiting, secrets, and logging. dvt-secure-api-review"
+  },
+  {
+    "type": "instruction",
+    "id": "git-pr-conventions",
+    "title": "Git Pr Conventions",
+    "description": "DVT git and pull request conventions that always apply across repositories",
+    "path": "instructions/git-pr-conventions.instructions.md",
+    "lastUpdated": null,
+    "searchText": "git pr conventions dvt git and pull request conventions that always apply across repositories (always)"
+  },
+  {
+    "type": "instruction",
+    "id": "security-baseline",
+    "title": "Security Baseline",
+    "description": "DVT security baseline — load when handling auth, secrets, user input, or data access",
+    "path": "instructions/security-baseline.instructions.md",
+    "lastUpdated": null,
+    "searchText": "security baseline dvt security baseline — load when handling auth, secrets, user input, or data access (model)"
+  },
+  {
+    "type": "instruction",
+    "id": "typescript-standards",
+    "title": "Typescript Standards",
+    "description": "DVT TypeScript coding standards for application and service code",
+    "path": "instructions/typescript-standards.instructions.md",
+    "lastUpdated": null,
+    "searchText": "typescript standards dvt typescript coding standards for application and service code **/*.ts, **/*.tsx"
+  }
+]

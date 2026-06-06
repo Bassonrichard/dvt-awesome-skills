@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DVT Instruction frontmatter",
+  "description": "Frontmatter schema for instructions/<name>.instructions.md",
+  "type": "object",
+  "required": ["description", "activation"],
+  "properties": {
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 1024,
+      "description": "What this instruction set covers; also used by model/agent-requested modes."
+    },
+    "activation": {
+      "enum": ["always", "glob", "model", "manual"],
+      "description": "How the rule is loaded. 'glob' requires the globs field."
+    },
+    "globs": {
+      "type": "string",
+      "description": "Comma-separated glob patterns. Required when activation is 'glob'."
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "tools": {
+          "type": "array",
+          "items": { "enum": ["copilot", "cursor", "windsurf", "claude", "kiro"] },
+          "uniqueItems": true
+        },
+        "category": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "if": { "properties": { "activation": { "const": "glob" } } },
+  "then": { "required": ["globs"] },
+  "additionalProperties": true
+}
