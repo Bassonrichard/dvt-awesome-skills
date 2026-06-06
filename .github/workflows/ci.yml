@@ -27,9 +27,10 @@ jobs:
 
       - name: Check generated files are committed
         run: |
-          if [ -n "$(git status --porcelain README.md llms.txt)" ]; then
-            echo "::error::README.md / llms.txt are stale. Run 'npm run build' and commit the result."
-            git --no-pager diff README.md llms.txt
+          if [ -n "$(git status --porcelain README.md llms.txt installs)" ]; then
+            echo "::error::Generated files (README.md / llms.txt / installs/) are stale. Run 'npm run build' and commit the result."
+            git --no-pager diff README.md llms.txt installs
+            git status --porcelain installs
             exit 1
           fi
 

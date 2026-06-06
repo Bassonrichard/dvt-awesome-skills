@@ -53,6 +53,7 @@
           <div
             id="copy-install-dropdown"
             class="install-dropdown copy-install-dropdown"
+            data-method="gh"
             style="display: none;"
           >
             <button
@@ -92,6 +93,26 @@
               </svg>
             </button>
             <div class="install-dropdown-menu" role="menu">
+              <div
+                class="copy-install-method"
+                role="group"
+                aria-label="Install method"
+              >
+                <button
+                  type="button"
+                  class="copy-install-method-btn is-active"
+                  data-method="gh"
+                >
+                  gh skill CLI
+                </button>
+                <button
+                  type="button"
+                  class="copy-install-method-btn"
+                  data-method="git"
+                >
+                  git clone
+                </button>
+              </div>
               <button
                 type="button"
                 class="copy-install-item"

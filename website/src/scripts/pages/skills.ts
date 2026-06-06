@@ -8,7 +8,7 @@ import {
   downloadZipBundle,
   updateQueryParams,
   copyToClipboard,
-  getSkillInstallCommand,
+  getSkillCommandForMethod,
   getInstallToolLabel,
 } from "../utils";
 import { setupModal, openFileModal } from "../modal";
@@ -60,6 +60,25 @@ function setupResourceListHandlers(list: HTMLElement | null): void {
   list.addEventListener("click", (event) => {
     const target = event.target as HTMLElement;
 
+    // Switching the install method (gh skill / git clone) keeps the menu open
+    const methodBtn = target.closest(
+      ".copy-install-method-btn"
+    ) as HTMLButtonElement | null;
+    if (methodBtn) {
+      event.stopPropagation();
+      const dropdown = methodBtn.closest(
+        ".copy-install-dropdown"
+      ) as HTMLElement | null;
+      const method = methodBtn.dataset.method;
+      if (dropdown && method) {
+        dropdown.dataset.method = method;
+        dropdown
+          .querySelectorAll(".copy-install-method-btn")
+          .forEach((b) => b.classList.toggle("is-active", b === methodBtn));
+      }
+      return;
+    }
+
     // Selecting an IDE from the "Copy Install" dropdown menu
     const copyInstallItem = target.closest(
       ".copy-install-item"
@@ -71,7 +90,8 @@ function setupResourceListHandlers(list: HTMLElement | null): void {
       ) as HTMLElement | null;
       const skillId = dropdown?.dataset.skillId;
       const tool = copyInstallItem.dataset.tool;
-      if (skillId && tool) copyInstallCommand(skillId, tool);
+      const method = dropdown?.dataset.method ?? "gh";
+      if (skillId && tool) copyInstallCommand(skillId, tool, method);
       closeCopyInstallDropdowns();
       return;
     }
@@ -148,9 +168,10 @@ function closeCopyInstallDropdowns(): void {
 
 async function copyInstallCommand(
   skillId: string,
-  tool: string
+  tool: string,
+  method: string
 ): Promise<void> {
-  const command = getSkillInstallCommand(tool, skillId);
+  const command = getSkillCommandForMethod(method, tool, skillId);
   const success = await copyToClipboard(command);
   const label = getInstallToolLabel(tool);
   showToast(

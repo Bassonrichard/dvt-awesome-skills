@@ -1,0 +1,39 @@
+---
+name: dvt-new-service-scaffold
+description: Use when creating a new backend service at DVT. Scaffolds the standard service layout, health checks, structured logging, and CI wiring so every service starts from the same baseline.
+---
+
+# DVT New Service Scaffold
+
+Stand up a new DVT backend service that matches the house architecture on day one.
+
+## When to use this skill
+
+Use this skill when you need to:
+- Create a brand-new backend service or microservice.
+- Bring an existing prototype up to the DVT baseline.
+
+## Standard layout
+
+```
+src/
+  api/          # transport layer (HTTP/gRPC handlers) — thin
+  domain/       # business logic, no framework imports
+  infra/        # db, queues, external clients
+  config/       # typed config loaded from env
+test/
+```
+
+## Steps
+
+1. Create the layout above; keep `domain/` free of framework/transport imports.
+2. Add a `/healthz` (liveness) and `/readyz` (readiness) endpoint.
+3. Wire structured JSON logging with a request/correlation id on every log line.
+4. Load config from environment via a typed config module — never read `process.env` directly in business code.
+5. Add the standard CI pipeline (lint → test → build → container scan).
+
+## References
+
+| Reference | When to load |
+|---|---|
+| references/checklist.md | Full pre-merge checklist for a new service |

@@ -3,9 +3,11 @@ interface Props {
   resourceType: string;
 }
 
+import { REPO_GITHUB_BASE, REPO_GITHUB_URL } from '../repo-config';
+
 const { resourceType } = Astro.props;
-const contributingUrl = 'https://github.com/bassonrichard/dvt-awesome-skills/blob/main/CONTRIBUTING.md';
-const newIssueUrl = 'https://github.com/bassonrichard/dvt-awesome-skills/issues/new';
+const contributingUrl = `${REPO_GITHUB_URL}/CONTRIBUTING.md`;
+const newIssueUrl = `${REPO_GITHUB_BASE}/issues/new`;
 ---
 
 <aside class="contribute-cta" aria-label="Contribute">
