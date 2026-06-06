@@ -1,0 +1,43 @@
+---
+inclusion: manual
+---
+
+# DVT ADR Author
+
+Capture an architecture decision in DVT's standard ADR format.
+
+## When to use this skill
+
+Use this skill when you need to:
+- Record a significant technical decision (framework, datastore, integration pattern).
+- Revisit or supersede a previous decision.
+
+## Format
+
+Create `docs/adr/NNNN-short-title.md` with sections:
+
+```markdown
+# NNNN. <Title>
+
+- Status: Proposed | Accepted | Superseded by ADR-XXXX
+- Date: YYYY-MM-DD
+- Deciders: <names>
+
+## Context
+What problem/force is driving this decision?
+
+## Options considered
+1. <Option> — pros / cons
+2. <Option> — pros / cons
+
+## Decision
+What we chose and why.
+
+## Consequences
+Trade-offs accepted, follow-ups, and what becomes easier/harder.
+```
+
+## Rules
+
+- One decision per ADR; never edit an Accepted ADR's decision — supersede it with a new one.
+- Number sequentially, zero-padded to four digits.

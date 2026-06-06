@@ -1,9 +1,7 @@
 import type { APIRoute } from "astro";
 import instructionsData from "../../public/data/instructions.json";
 import skillsData from "../../public/data/skills.json";
-
-const REPO_RAW_BASE =
-  "https://raw.githubusercontent.com/bassonrichard/dvt-awesome-skills/main";
+import { REPO_BASE_URL as REPO_RAW_BASE, REPO_GITHUB_BASE } from "../repo-config";
 
 const normalizeDescription = (value?: string) =>
   (value || "No description available").replace(/\s+/g, " ").trim();
@@ -41,7 +39,7 @@ export const GET: APIRoute = async () => {
   content += "\n";
 
   content += "## Repository\n\n";
-  content += "- **GitHub**: https://github.com/bassonrichard/dvt-awesome-skills\n";
+  content += `- **GitHub**: ${REPO_GITHUB_BASE}\n`;
 
   return new Response(content, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },

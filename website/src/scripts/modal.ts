@@ -16,7 +16,7 @@ import {
   escapeHtml,
   getResourceIconSvg,
   sanitizeUrl,
-  getSkillInstallCommand,
+  getSkillCommandForMethod,
   getInstallToolLabel,
 } from "./utils";
 import fm from "front-matter";
@@ -845,7 +845,10 @@ export function setupInstallDropdown(containerId: string): void {
 /**
  * Copy the install command for the given tool to the clipboard.
  */
-async function copyInstallCommandForTool(tool: string): Promise<void> {
+async function copyInstallCommandForTool(
+  tool: string,
+  method: string
+): Promise<void> {
   if (!currentFilePath || currentFileType !== "skill") return;
 
   const skill = await getSkillItemByFilePath(currentFilePath);
@@ -854,7 +857,7 @@ async function copyInstallCommandForTool(tool: string): Promise<void> {
     return;
   }
 
-  const command = getSkillInstallCommand(tool, skill.id);
+  const command = getSkillCommandForMethod(method, tool, skill.id);
   const success = await copyToClipboard(command);
   const label = getInstallToolLabel(tool);
   showToast(
@@ -877,6 +880,20 @@ export function setupCopyInstallDropdown(): void {
   const items = Array.from(
     container.querySelectorAll<HTMLButtonElement>(".copy-install-item")
   );
+  const methodBtns = Array.from(
+    container.querySelectorAll<HTMLButtonElement>(".copy-install-method-btn")
+  );
+
+  methodBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const method = btn.dataset.method;
+      if (!method) return;
+      container.dataset.method = method;
+      methodBtns.forEach((b) => b.classList.toggle("is-active", b === btn));
+    });
+  });
 
   const setOpen = (open: boolean) => {
     container.classList.toggle("open", open);
@@ -902,9 +919,10 @@ export function setupCopyInstallDropdown(): void {
   items.forEach((item, index) => {
     item.addEventListener("click", async () => {
       const tool = item.dataset.tool;
+      const method = container.dataset.method ?? "gh";
       setOpen(false);
       toggle?.focus();
-      if (tool) await copyInstallCommandForTool(tool);
+      if (tool) await copyInstallCommandForTool(tool, method);
     });
 
     item.addEventListener("keydown", (e) => {

@@ -10,6 +10,16 @@ export const SKILLS_DIR = path.join(ROOT_DIR, "skills");
 export const INSTRUCTIONS_DIR = path.join(ROOT_DIR, "instructions");
 export const DIST_DIR = path.join(ROOT_DIR, "dist");
 
+// Repo identity — single source of truth (mirror of website/src/repo-config.ts).
+// Change these to move the project to a new owner, name, or self-hosted host.
+export const REPO_OWNER = "bassonrichard";
+export const REPO_NAME = "dvt-awesome-skills";
+export const REPO_DEFAULT_BRANCH = "main";
+export const REPO_IDENTIFIER = `${REPO_OWNER}/${REPO_NAME}`;
+export const REPO_GITHUB_BASE = `https://github.com/${REPO_IDENTIFIER}`;
+export const REPO_HTTPS_URL = `${REPO_GITHUB_BASE}.git`;
+export const REPO_BASE_URL = `https://raw.githubusercontent.com/${REPO_IDENTIFIER}/${REPO_DEFAULT_BRANCH}`;
+
 // Supported target tools. Adding a new tool = add its id here + an adapter module.
 export const TOOLS = ["copilot", "cursor", "windsurf", "claude", "kiro"];
 
