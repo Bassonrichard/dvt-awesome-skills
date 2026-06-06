@@ -931,6 +931,51 @@ body:has(#main-content) {
   margin: 4px 0;
 }
 
+/* Copy Install dropdown (single toggle button + per-IDE menu) */
+.copy-install-dropdown .copy-install-btn-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.copy-install-dropdown .copy-install-caret {
+  transition: transform var(--transition);
+}
+
+.copy-install-dropdown.open .copy-install-caret {
+  transform: rotate(180deg);
+}
+
+.install-dropdown-menu button.copy-install-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  color: var(--color-text);
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.install-dropdown-menu button.copy-install-item:first-child {
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.install-dropdown-menu button.copy-install-item:last-child {
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+.install-dropdown-menu button.copy-install-item:hover,
+.install-dropdown-menu button.copy-install-item:focus-visible {
+  background: var(--color-bg-tertiary);
+  outline: none;
+}
+
 /* Spinner animation */
 @keyframes spin {
   from {

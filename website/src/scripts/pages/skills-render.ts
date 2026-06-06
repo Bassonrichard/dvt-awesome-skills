@@ -2,6 +2,7 @@ import {
   escapeHtml,
   getGitHubUrl,
   getLastUpdatedHtml,
+  INSTALL_TOOLS,
 } from "../utils";
 
 export interface RenderableSkillFile {
@@ -77,15 +78,28 @@ export function renderSkillsHtml(items: RenderableSkill[]): string {
             </div>
           </button>
           <div class="resource-actions">
-            <button class="btn btn-secondary copy-install-btn" data-skill-id="${escapeHtml(
+            <div class="install-dropdown copy-install-dropdown" data-skill-id="${escapeHtml(
               item.id
-            )}" title="Copy install command">
-              <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
-                <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/>
-                <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/>
-              </svg>
-              Copy Install
-            </button>
+            )}">
+              <button type="button" class="btn btn-secondary copy-install-btn copy-install-btn-main" aria-haspopup="menu" aria-expanded="false" title="Copy install command">
+                <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+                  <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/>
+                  <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/>
+                </svg>
+                Copy Install
+                <svg class="copy-install-caret" viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true">
+                  <path d="M4.427 7.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 7H4.604a.25.25 0 00-.177.427z"/>
+                </svg>
+              </button>
+              <div class="install-dropdown-menu" role="menu">
+                ${INSTALL_TOOLS.map(
+                  (tool) =>
+                    `<button type="button" class="copy-install-item" role="menuitem" data-tool="${escapeHtml(
+                      tool.id
+                    )}">${escapeHtml(tool.label)}</button>`
+                ).join("")}
+              </div>
+            </div>
             <button class="btn btn-primary download-skill-btn" data-skill-id="${escapeHtml(
               item.id
             )}" title="Download as ZIP">

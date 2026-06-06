@@ -50,27 +50,90 @@
               <div id="modal-file-menu" class="modal-file-menu" role="menu"></div>
             </div>
           </div>
-          <button
-            id="install-command-btn"
-            class="btn btn-secondary hidden"
-            aria-label="Copy install command"
+          <div
+            id="copy-install-dropdown"
+            class="install-dropdown copy-install-dropdown"
+            style="display: none;"
           >
-            <svg
-              viewBox="0 0 16 16"
-              width="16"
-              height="16"
-              fill="currentColor"
-              aria-hidden="true"
+            <button
+              type="button"
+              id="copy-install-btn"
+              class="btn btn-secondary copy-install-btn-main"
+              aria-label="Copy install command"
+              aria-haspopup="menu"
+              aria-expanded="false"
             >
-              <path
-                d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"
-              ></path>
-              <path
-                d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"
-              ></path>
-            </svg>
-            <span aria-hidden="true">Copy Install</span>
-          </button>
+              <svg
+                viewBox="0 0 16 16"
+                width="16"
+                height="16"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"
+                ></path>
+                <path
+                  d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"
+                ></path>
+              </svg>
+              <span aria-hidden="true">Copy Install</span>
+              <svg
+                class="copy-install-caret"
+                viewBox="0 0 16 16"
+                width="12"
+                height="12"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4.427 7.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 7H4.604a.25.25 0 00-.177.427z"
+                ></path>
+              </svg>
+            </button>
+            <div class="install-dropdown-menu" role="menu">
+              <button
+                type="button"
+                class="copy-install-item"
+                role="menuitem"
+                data-tool="copilot"
+              >
+                GitHub Copilot
+              </button>
+              <button
+                type="button"
+                class="copy-install-item"
+                role="menuitem"
+                data-tool="cursor"
+              >
+                Cursor
+              </button>
+              <button
+                type="button"
+                class="copy-install-item"
+                role="menuitem"
+                data-tool="windsurf"
+              >
+                Windsurf
+              </button>
+              <button
+                type="button"
+                class="copy-install-item"
+                role="menuitem"
+                data-tool="claude"
+              >
+                Claude Code
+              </button>
+              <button
+                type="button"
+                class="copy-install-item"
+                role="menuitem"
+                data-tool="kiro"
+              >
+                Kiro
+              </button>
+            </div>
+          </div>
           <button
             id="raw-btn"
             class="btn btn-secondary hidden"

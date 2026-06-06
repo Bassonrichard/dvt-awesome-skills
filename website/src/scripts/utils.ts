@@ -13,6 +13,36 @@ const REPO_GITHUB_URL = "https://github.com/bassonrichard/dvt-awesome-skills/blo
  */
 export const REPO_IDENTIFIER = "bassonrichard/dvt-awesome-skills";
 
+/**
+ * Supported IDEs for the per-tool "Copy Install" dropdowns. The `id` maps to a
+ * `--tool` value understood by `npm run install:tool` (see eng/install.mjs).
+ */
+export const INSTALL_TOOLS: ReadonlyArray<{ id: string; label: string }> = [
+  { id: "copilot", label: "GitHub Copilot" },
+  { id: "cursor", label: "Cursor" },
+  { id: "windsurf", label: "Windsurf" },
+  { id: "claude", label: "Claude Code" },
+  { id: "kiro", label: "Kiro" },
+];
+
+const INSTALL_TOOL_LABELS: Record<string, string> = Object.fromEntries(
+  INSTALL_TOOLS.map((tool) => [tool.id, tool.label])
+);
+
+/**
+ * Human-readable label for an install tool id (falls back to the id itself).
+ */
+export function getInstallToolLabel(tool: string): string {
+  return INSTALL_TOOL_LABELS[tool] ?? tool;
+}
+
+/**
+ * Build the command that lays a skill down in a given tool's native format.
+ */
+export function getSkillInstallCommand(tool: string, skillId: string): string {
+  return `npm run install:tool -- --tool ${tool} --dir . --skill ${skillId}`;
+}
+
 // VS Code install URL configurations
 const VSCODE_INSTALL_CONFIG: Record<
   string,

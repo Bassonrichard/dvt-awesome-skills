@@ -8,7 +8,8 @@ import {
   downloadZipBundle,
   updateQueryParams,
   copyToClipboard,
-  REPO_IDENTIFIER,
+  getSkillInstallCommand,
+  getInstallToolLabel,
 } from "../utils";
 import { setupModal, openFileModal } from "../modal";
 import {
@@ -59,13 +60,37 @@ function setupResourceListHandlers(list: HTMLElement | null): void {
   list.addEventListener("click", (event) => {
     const target = event.target as HTMLElement;
 
+    // Selecting an IDE from the "Copy Install" dropdown menu
+    const copyInstallItem = target.closest(
+      ".copy-install-item"
+    ) as HTMLButtonElement | null;
+    if (copyInstallItem) {
+      event.stopPropagation();
+      const dropdown = copyInstallItem.closest(
+        ".copy-install-dropdown"
+      ) as HTMLElement | null;
+      const skillId = dropdown?.dataset.skillId;
+      const tool = copyInstallItem.dataset.tool;
+      if (skillId && tool) copyInstallCommand(skillId, tool);
+      closeCopyInstallDropdowns();
+      return;
+    }
+
+    // Toggling the "Copy Install" dropdown open/closed
     const copyInstallButton = target.closest(
       ".copy-install-btn"
     ) as HTMLButtonElement | null;
     if (copyInstallButton) {
       event.stopPropagation();
-      const skillId = copyInstallButton.dataset.skillId;
-      if (skillId) copyInstallCommand(skillId, copyInstallButton);
+      const dropdown = copyInstallButton.closest(
+        ".copy-install-dropdown"
+      ) as HTMLElement | null;
+      if (dropdown) {
+        const willOpen = !dropdown.classList.contains("open");
+        closeCopyInstallDropdowns();
+        dropdown.classList.toggle("open", willOpen);
+        copyInstallButton.setAttribute("aria-expanded", String(willOpen));
+      }
       return;
     }
 
@@ -86,6 +111,18 @@ function setupResourceListHandlers(list: HTMLElement | null): void {
     if (path) openFileModal(path, resourceType);
   });
 
+  // Close any open "Copy Install" dropdown when clicking elsewhere
+  document.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement;
+    if (!target.closest(".copy-install-dropdown")) {
+      closeCopyInstallDropdowns();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeCopyInstallDropdowns();
+  });
+
   resourceListHandlersReady = true;
 }
 
@@ -98,24 +135,28 @@ function syncUrlState(): void {
   });
 }
 
+function closeCopyInstallDropdowns(): void {
+  document
+    .querySelectorAll(".copy-install-dropdown.open")
+    .forEach((dropdown) => {
+      dropdown.classList.remove("open");
+      dropdown
+        .querySelector(".copy-install-btn")
+        ?.setAttribute("aria-expanded", "false");
+    });
+}
+
 async function copyInstallCommand(
   skillId: string,
-  btn: HTMLButtonElement
+  tool: string
 ): Promise<void> {
-  const command = `gh skills install ${REPO_IDENTIFIER} ${skillId}`;
-  const originalContent = btn.innerHTML;
+  const command = getSkillInstallCommand(tool, skillId);
   const success = await copyToClipboard(command);
+  const label = getInstallToolLabel(tool);
   showToast(
-    success ? "Install command copied!" : "Failed to copy",
+    success ? `${label} install command copied!` : "Failed to copy",
     success ? "success" : "error"
   );
-  if (success) {
-    btn.innerHTML =
-      '<svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0z"/></svg> Copied!';
-    setTimeout(() => {
-      btn.innerHTML = originalContent;
-    }, 2000);
-  }
 }
 
 async function downloadSkill(

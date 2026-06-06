@@ -16,7 +16,8 @@ import {
   escapeHtml,
   getResourceIconSvg,
   sanitizeUrl,
-  REPO_IDENTIFIER,
+  getSkillInstallCommand,
+  getInstallToolLabel,
 } from "./utils";
 import fm from "front-matter";
 
@@ -511,7 +512,6 @@ export function setupModal(): void {
 
   const closeBtn = document.getElementById("close-modal");
   const copyBtn = document.getElementById("copy-btn");
-  const installCommandBtn = document.getElementById("install-command-btn");
   const downloadBtn = document.getElementById("download-btn");
   const shareBtn = document.getElementById("share-btn");
   const renderBtn = document.getElementById("render-btn");
@@ -546,30 +546,6 @@ export function setupModal(): void {
         success ? "Copied to clipboard!" : "Failed to copy",
         success ? "success" : "error"
       );
-    }
-  });
-
-  installCommandBtn?.addEventListener("click", async () => {
-    if (currentFilePath && currentFileType === "skill") {
-      const skill = await getSkillItemByFilePath(currentFilePath);
-      if (!skill) {
-        showToast("Could not resolve skill ID.", "error");
-        return;
-      }
-      const command = `gh skills install ${REPO_IDENTIFIER} ${skill.id}`;
-      const originalContent = installCommandBtn.innerHTML;
-      const success = await copyToClipboard(command);
-      showToast(
-        success ? "Install command copied!" : "Failed to copy",
-        success ? "success" : "error"
-      );
-      if (success) {
-        installCommandBtn.innerHTML =
-          '<svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0z"/></svg><span aria-hidden="true">Copied!</span>';
-        setTimeout(() => {
-          installCommandBtn.innerHTML = originalContent;
-        }, 2000);
-      }
     }
   });
 
@@ -722,6 +698,9 @@ export function setupModal(): void {
   // Setup install dropdown toggle
   setupInstallDropdown("install-dropdown");
 
+  // Setup per-IDE "Copy Install" command dropdown
+  setupCopyInstallDropdown();
+
   // Handle browser back/forward navigation
   window.addEventListener("hashchange", handleHashChange);
 
@@ -864,6 +843,100 @@ export function setupInstallDropdown(containerId: string): void {
 }
 
 /**
+ * Copy the install command for the given tool to the clipboard.
+ */
+async function copyInstallCommandForTool(tool: string): Promise<void> {
+  if (!currentFilePath || currentFileType !== "skill") return;
+
+  const skill = await getSkillItemByFilePath(currentFilePath);
+  if (!skill) {
+    showToast("Could not resolve skill ID.", "error");
+    return;
+  }
+
+  const command = getSkillInstallCommand(tool, skill.id);
+  const success = await copyToClipboard(command);
+  const label = getInstallToolLabel(tool);
+  showToast(
+    success ? `${label} install command copied!` : "Failed to copy",
+    success ? "success" : "error"
+  );
+}
+
+/**
+ * Setup the per-IDE "Copy Install" dropdown: toggle, keyboard nav, and
+ * copying the tool-specific install command on selection.
+ */
+export function setupCopyInstallDropdown(): void {
+  const container = document.getElementById("copy-install-dropdown");
+  if (!container) return;
+
+  const toggle = document.getElementById(
+    "copy-install-btn"
+  ) as HTMLButtonElement | null;
+  const items = Array.from(
+    container.querySelectorAll<HTMLButtonElement>(".copy-install-item")
+  );
+
+  const setOpen = (open: boolean) => {
+    container.classList.toggle("open", open);
+    toggle?.setAttribute("aria-expanded", String(open));
+  };
+
+  toggle?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const willOpen = !container.classList.contains("open");
+    setOpen(willOpen);
+    if (willOpen && items.length > 0) items[0].focus();
+  });
+
+  toggle?.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setOpen(true);
+      items[0]?.focus();
+    }
+  });
+
+  items.forEach((item, index) => {
+    item.addEventListener("click", async () => {
+      const tool = item.dataset.tool;
+      setOpen(false);
+      toggle?.focus();
+      if (tool) await copyInstallCommandForTool(tool);
+    });
+
+    item.addEventListener("keydown", (e) => {
+      switch (e.key) {
+        case "ArrowDown":
+          e.preventDefault();
+          items[Math.min(index + 1, items.length - 1)].focus();
+          break;
+        case "ArrowUp":
+          e.preventDefault();
+          if (index === 0) toggle?.focus();
+          else items[index - 1].focus();
+          break;
+        case "Escape":
+          e.preventDefault();
+          setOpen(false);
+          toggle?.focus();
+          break;
+        case "Tab":
+          setOpen(false);
+          break;
+      }
+    });
+  });
+
+  // Close when clicking outside the dropdown
+  document.addEventListener("click", (e) => {
+    if (!container.contains(e.target as Node)) setOpen(false);
+  });
+}
+
+/**
  * Open file viewer modal
  * @param filePath - Path to the file
  * @param type - Resource type (agent, instruction, etc.)
@@ -889,7 +962,7 @@ export async function openFileModal(
     "install-insiders"
   ) as HTMLAnchorElement | null;
   const copyBtn = document.getElementById("copy-btn");
-  const installCommandBtn = document.getElementById("install-command-btn");
+  const copyInstallDropdown = document.getElementById("copy-install-dropdown");
   const downloadBtn = document.getElementById("download-btn");
   const closeBtn = document.getElementById("close-modal");
   if (!modal || !title) return;
@@ -926,9 +999,9 @@ export async function openFileModal(
   if (type === "plugin") {
     const modalContent = getModalContent();
     if (!modalContent) return;
-    if (installCommandBtn) {
-      installCommandBtn.style.display = "none";
-      installCommandBtn.classList.add("hidden");
+    if (copyInstallDropdown) {
+      copyInstallDropdown.style.display = "none";
+      copyInstallDropdown.classList.remove("open");
     }
     hideSkillFileSwitcher();
     await openPluginModal(
@@ -951,10 +1024,10 @@ export async function openFileModal(
       type === "skill" ? "Download skill as ZIP" : "Download file"
     );
   }
-  // Show copy install button only for skills
-  if (installCommandBtn) {
-    installCommandBtn.style.display = type === "skill" ? "inline-flex" : "none";
-    installCommandBtn.classList.toggle("hidden", type !== "skill");
+  // Show the per-IDE "Copy Install" dropdown only for skills
+  if (copyInstallDropdown) {
+    copyInstallDropdown.style.display = type === "skill" ? "inline-flex" : "none";
+    copyInstallDropdown.classList.remove("open");
   }
   renderPlainText("Loading...");
   hideSkillFileSwitcher();
@@ -1256,6 +1329,7 @@ function renderLocalPluginModal(
 export function closeModal(updateUrl = true): void {
   const modal = document.getElementById("file-modal");
   const installDropdown = document.getElementById("install-dropdown");
+  const copyInstallDropdown = document.getElementById("copy-install-dropdown");
 
   if (modal) {
     modal.classList.add("hidden");
@@ -1263,6 +1337,9 @@ export function closeModal(updateUrl = true): void {
   }
   if (installDropdown) {
     installDropdown.classList.remove("open");
+  }
+  if (copyInstallDropdown) {
+    copyInstallDropdown.classList.remove("open");
   }
 
   // Update URL for deep linking
