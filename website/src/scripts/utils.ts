@@ -5,13 +5,13 @@ import { getEmbeddedData as getEmbeddedPageData } from "./embedded-data";
  */
 
 const REPO_BASE_URL =
-  "https://raw.githubusercontent.com/dvt/dvt-awesome-skills/main";
-const REPO_GITHUB_URL = "https://github.com/dvt/dvt-awesome-skills/blob/main";
+  "https://raw.githubusercontent.com/bassonrichard/dvt-awesome-skills/main";
+const REPO_GITHUB_URL = "https://github.com/bassonrichard/dvt-awesome-skills/blob/main";
 
 /**
  * The repo identifier used in copyable install commands
  */
-export const REPO_IDENTIFIER = "dvt/dvt-awesome-skills";
+export const REPO_IDENTIFIER = "bassonrichard/dvt-awesome-skills";
 
 // VS Code install URL configurations
 const VSCODE_INSTALL_CONFIG: Record<

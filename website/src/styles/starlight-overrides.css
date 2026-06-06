@@ -1,21 +1,22 @@
 /* Brand color overrides for Starlight */
-/* Purple (#8534F3) and Orange (#FE4C25) theme */
+/* DVT Blue (#027FBA) and Cyan (#04C5D1) theme */
 
 /* ── Dark theme (default) ─────────────────────────────────── */
 :root {
-  --sl-color-accent-low: #1a0d33;
-  --sl-color-accent: #8534f3;
-  --sl-color-accent-high: #c9a5fa;
-  --sl-color-text-accent: #c9a5fa;
+  --sl-color-accent-low: #042e44;
+  --sl-color-accent: #027fba;
+  --sl-color-accent-high: #9ad5f0;
+  --sl-color-text-accent: #9ad5f0;
+  --sl-color-gold: #ffc72c;
 
-  --sl-color-white: #f0f0f5;
-  --sl-color-gray-1: #d0d0da;
-  --sl-color-gray-2: #9898a6;
-  --sl-color-gray-3: #60607a;
-  --sl-color-gray-4: #30304a;
-  --sl-color-gray-5: #1a1a2e;
-  --sl-color-gray-6: #0d0d12;
-  --sl-color-black: #0d0d12;
+  --sl-color-white: #f0f4f7;
+  --sl-color-gray-1: #d2dae1;
+  --sl-color-gray-2: #96a4b1;
+  --sl-color-gray-3: #5e6e7c;
+  --sl-color-gray-4: #2e3b47;
+  --sl-color-gray-5: #16202b;
+  --sl-color-gray-6: #040609;
+  --sl-color-black: #040609;
 
   --sl-font-system: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
@@ -26,10 +27,11 @@
    Because our customCss is unlayered it overrides Starlight's layered
    theme swap, so we must provide the inverted palette ourselves. */
 :root[data-theme="light"] {
-  --sl-color-accent-low: #f0e6ff;
-  --sl-color-accent: #6b21c8;
-  --sl-color-accent-high: #3b0d7a;
-  --sl-color-text-accent: #6b21c8;
+  --sl-color-accent-low: #d8eefb;
+  --sl-color-accent: #015d88;
+  --sl-color-accent-high: #013e5c;
+  --sl-color-text-accent: #015d88;
+  --sl-color-gold: #c77c0a;
 
   --sl-color-white: #0a0a0f;
   --sl-color-gray-1: #111120;
@@ -52,9 +54,10 @@ nav[aria-label="Main"] a {
 }
 
 nav[aria-label="Main"] a[aria-current="page"] {
-  color: var(--sl-color-text-invert) !important;
+  color: var(--sl-color-gold) !important;
+  background-color: transparent !important;
   font-weight: 600 !important;
-  border-inline-start-color: var(--sl-color-accent) !important;
+  border-inline-start-color: var(--sl-color-gold) !important;
 }
 
 /* ── Header brand styling ──────────────────────────────────── */

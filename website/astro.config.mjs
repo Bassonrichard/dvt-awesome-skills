@@ -3,19 +3,26 @@ import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 import pagefindResources from "./src/integrations/pagefind-resources";
 
-const site = "https://dvt-awesome-skills.internal/";
+const site = "https://bassonrichard.github.io";
+const base = "/dvt-awesome-skills/";
 const siteDescription =
   "DVT's internal collection of AI skills and coding instructions — author once, generate for Copilot, Cursor, Windsurf, Claude Code, and Kiro";
-const socialImageUrl = new URL("/images/social-image.png", site).toString();
+const socialImageUrl = new URL(`${base}images/social-image.png`, site).toString();
 
 // https://astro.build/config
 export default defineConfig({
   site,
-  base: "/",
+  base,
   output: "static",
   integrations: [
     starlight({
       title: "DVT Awesome Skills",
+      logo: {
+        light: "./src/assets/dvt-logo-light.svg",
+        dark: "./src/assets/dvt-logo.svg",
+        replacesTitle: true,
+        alt: "DVT — smart people, smart solutions",
+      },
       favicon: "/images/favicon.svg",
       description: siteDescription,
       social: [],
@@ -44,7 +51,7 @@ export default defineConfig({
       ],
       customCss: ["./src/styles/starlight-overrides.css", "./src/styles/global.css"],
       editLink: {
-        baseUrl: "https://github.com/dvt/dvt-awesome-skills/edit/main/website/",
+        baseUrl: "https://github.com/bassonrichard/dvt-awesome-skills/edit/main/website/",
       },
       sidebar: [
         {

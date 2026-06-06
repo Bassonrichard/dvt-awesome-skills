@@ -3,7 +3,7 @@ import instructionsData from "../../public/data/instructions.json";
 import skillsData from "../../public/data/skills.json";
 
 const REPO_RAW_BASE =
-  "https://raw.githubusercontent.com/dvt/dvt-awesome-skills/main";
+  "https://raw.githubusercontent.com/bassonrichard/dvt-awesome-skills/main";
 
 const normalizeDescription = (value?: string) =>
   (value || "No description available").replace(/\s+/g, " ").trim();
@@ -41,7 +41,7 @@ export const GET: APIRoute = async () => {
   content += "\n";
 
   content += "## Repository\n\n";
-  content += "- **GitHub**: https://github.com/dvt/dvt-awesome-skills\n";
+  content += "- **GitHub**: https://github.com/bassonrichard/dvt-awesome-skills\n";
 
   return new Response(content, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },

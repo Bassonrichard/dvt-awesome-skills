@@ -57,7 +57,7 @@ const readme = `# DVT Awesome Skills
 ## Getting started
 
 \`\`\`bash
-git clone https://github.com/dvt/dvt-awesome-skills.git
+git clone https://github.com/bassonrichard/dvt-awesome-skills.git
 cd dvt-awesome-skills
 npm install
 
